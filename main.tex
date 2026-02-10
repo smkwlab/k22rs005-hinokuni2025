@@ -1,116 +1,751 @@
-\documentclass[dvipdfmx,uplatex,a4paper,10pt]{jsarticle}
+%%
+%% 研究報告用スイッチ
+%% [techrep]
+%%
+%% 欧文表記無しのスイッチ(etitle,eabstractは任意)
+%% [noauthor]
+%%
 
-%% 基本パッケージ
-\usepackage{graphicx}                    % 図表挿入
-\usepackage{amsmath,amssymb}            % 数式
-\usepackage{url}                        % URL表示
-\usepackage{enumitem}                   % リスト調整
-\usepackage{textcomp}                   % 追加記号サポート
+%\documentclass[submit,techrep]{ipsj}
+\documentclass[submit,techrep,noauthor]{ipsj}
 
-%% 日本語フォント設定
-\usepackage[deluxe]{otf}
-\usepackage[noalphabet,unicode,haranoaji]{pxchfon}
 
-%% レイアウト設定
-\usepackage[top=25mm,bottom=25mm,left=25mm,right=25mm]{geometry}
-\linespread{1.2}                        % 行間調整
 
-%% リスト設定
-\renewcommand{\labelitemi}{$\bullet$}
-\renewcommand{\labelitemii}{$\circ$}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{tabularx} % プリアンブルに追加してください
+\usepackage{array} %追加
 
-%% ハイパーリンク設定
-\usepackage[hidelinks]{hyperref}
+\def\Underline{\setbox0\hbox\bgroup\let\\\endUnderline}
+\def\endUnderline{\vphantom{y}\egroup\smash{\underline{\box0}}\\}
+\def\|{\verb|}
+%
 
-%% 文書情報
-\title{LaTeX文書テンプレート}
-\author{著者名}
-\date{\today}
+%\setcounter{巻数}{59}%vol59=2018
+%\setcounter{号数}{10}
+%\setcounter{page}{1}
+
 
 \begin{document}
+
+
+\title{悩み解決アプリ「ご意見BOX」の開発\\}
+
+\etitle{Research on a Method for Reducing DNS Name Resolution Time Using Predictive Caching \\ }
+
+\affiliate{KSU}{九州産業大学理工学部情報科学科\\
+Department of Information Science, Faculty of Science and
+Technology, Kyusyu Sangyo University, Fukuoka 813-8503,
+Japan}
+
+\affiliate{FWU}{福岡女子大学国際文理学部環境科学科\\
+Department of Environmental Sciences, Faculty of Inter-
+national Arts and Sciences, Fukuoka Women’s University,
+Fukuoka 813-8529, Japan}
+
+\author{荒田 大翔}{Arata Yamato}{KSU}
+\author{神屋 郁子}{Kamiya Yuko}{FWU}
+\author{下川 俊彦}{Shimokawa Toshihiko}{KSU}
+
+\begin{abstract}
+学内における悩み解決の手段として,特定の個人や部署への電話・メールや対面相談,意見交換ができる掲示版やアプリといったデジタルプラットフォームが挙げられる.
+現在,学内には意見交換を行える掲示板やアプリといったデジタルプラットフォームが存在しない.
+そのため,カジュアルな意見を広範囲から募ろうと考えると,有効な手段を探すのは難しい現状がある.
+この現状を解決するには悩み事をご意見という形で投稿し,それにコメントできるデジタルプラットフォームを構築する必要があると考えた.
+本研究の目的は,広範囲からカジュアルな意見を募ることができる手段を増やすことである.
+目標達成のために,広範囲からカジュアルな意見交換ができる「ご意見 BOX」を開発した.
+本システムの中でも主要な機能は,ご意見の閲覧,ご意見の投稿,ご意見に対するコメントである.
+評価実験の結果,本システムが正常に動作しており,本システムが学内ユーザーの悩み解決を促す手段として整理しているといえる.
+一方で,特定端末での不具合やユーザー数や投稿数の不足が課題点である.
+\end{abstract}
+
+
+%
+%\begin{jkeyword}
+%情報処理学会論文誌ジャーナル，\LaTeX，スタイルファイル，べからず集
+%\end{jkeyword}
+%
+\begin{eabstract}
+Internet service usage requires name resolution.
+Modern web page structures include multiple external domains, making accumulated name resolution time a factor that degrades user experience.
+Therefore, this research developed a “predictive DNS caching system” aimed at reducing name resolution time.
+This system focuses on “co-occurrence” and “periodicity” derived from user access patterns.
+It applies statistical analysis to “co-occurrence” and machine learning to “periodicity” to predict and prefetch future queries.
+Simulation evaluations using pre-collected DNS query logs confirmed improved cache hit rates and reduced name resolution times compared to conventional methods, demonstrating the system's effectiveness.
+\end{eabstract}
+
+%\begin{ekeyword}
+%IPSJ Journal, \LaTeX, style files, ``Dos and Dont's'' list
+%\end{ekeyword}
+
 \maketitle
 
-% 目次
-\tableofcontents
-\newpage
-
+%1
 \section{はじめに}
+学内における悩み解決の手段として,特定の個人や部署への電話・メールや対面相談,意見交換ができる掲示版やアプリといったデジタルプラットフォームが挙げられる.
+現在,学内には意見交換を行える掲示板やアプリといったデジタルプラットフォームが存在しない.
+そのため,カジュアルな意見を広範囲から募ろうと考えると,有効な手段を探すのは難しい現状がある.
+この現状を解決するには悩み事をご意見という形で投稿し,それにコメントできるデジタルプラットフォームを構築する必要があると考えた.
+本研究の目的は,広範囲からカジュアルな意見を募ることができる手段を増やすことである.
 
-これは汎用的な日本語LaTeX文書のテンプレートです。研究ノート、レポート、実験記録など様々な用途に活用できます。
-
-\subsection{このテンプレートの特徴}
+本研究における用語解説を以下に示す.
 
 \begin{itemize}
-\item シンプルな構造で使いやすい
-\item 日本語に最適化されたレイアウト
-\item 基本的な機能を網羅
-\item カスタマイズが容易
+  \item 本研究における悩みとは,「香椎祭での催しについて案を募りたい」,「履修科目の雰囲気が知りたい」,「九産大周辺のおすすめのランチが知りたい」といった悩みを想定している.
+  \item 本研究における「カジュアルな意見」とは,イベントや学業関連だけではなく,些細な疑問や日常的な話題に関する意見のことを指す.また,カジュアルな意見を投稿し,コメントを得ることを「カジュアルな意見交換」とする.
 \end{itemize}
 
-\section{基本的な使い方}
+%3
+\section{悩み解決アプリ「ご意見BOX」の設計}
+\label{sec:format}
 
-\subsection{文書の構成}
+目的達成のため,本研究では「ご意見BOX」を開発した.
+ご意見BOXとは,ご意見 BOX とは,学内での悩み解決のため,意見交換を行うためのアプリである.
 
-文書は\texttt{section}と\texttt{subsection}で構成します。必要に応じて\texttt{subsubsection}も使用できます。
+%3.1
+\subsection{要件定義}\label{youken}
+ご意見 BOX の要件定義は以下のとおりである.
 
-\subsection{数式の記述}
-
-数式は以下のように記述できます。
-
-インライン数式: $E = mc^2$
-
-独立した数式:
-\begin{equation}
-(x - a)^2 + (y - b)^2 = r^2
-\label{eq:circle}
-\end{equation}
-
-式~\ref{eq:circle}は円の方程式です。
-
-\subsection{図表の挿入}
-
-図や表は\texttt{graphicx}パッケージを使用して挿入できます。
-
-% 図の例（コメントアウト）
-% \begin{figure}[htbp]
-%   \centering
-%   \includegraphics[width=0.8\textwidth]{example.png}
-%   \caption{図の例}
-%   \label{fig:example}
-% \end{figure}
-
-\section{応用例}
-
-\subsection{リストの活用}
-
-番号なしリスト:
 \begin{itemize}
-\item 項目1
-\item 項目2
-  \begin{itemize}
-  \item サブ項目A
-  \item サブ項目B
-  \end{itemize}
-\item 項目3
+  \item ログイン・新規登録
+  \item ログアウト機能
+  \item ご意見の投稿
+  \item ご意見へのコメント
+  \item ご意見の閲覧
+  \item ご意見の検索・ソート
+  \item ご意見・コメントの削除
+  \item ご意見・コメントの編集
+  \item ベストアンサーの付与・削除
+  \item リアクションの付与・削除
+  \item ユーザープロフィールの表示
+  \item ユーザー種別の設定
+  \item 所属・学部/学科の設定
 \end{itemize}
 
-番号付きリスト:
+
+%3.2
+\subsection{ご意見BOXの機能一覧（フロントエンド）}
+
+本研究で設計したご意見BOXのフロントエンドの機能は以下のとおりである.
+
 \begin{enumerate}
-\item 手順1
-\item 手順2
-\item 手順3
+  \item ログイン機能 \\
+  ログインするための画面を表示する.
+ユーザーIDとパスワードを入力することでログイン可能.
+
+  \item 新規登録機能 \\
+   ユーザーのアカウントを新規登録するための画面を表示する.
+   ユーザーのログイン情報,ご意見BOXを利用するにあたって必要な情報を登録する.
+   具体的に登録できる情報は,ニックネーム,ユーザー種別,所属・学部/学科,ユーザーID,パスワードの6種類である.
+
+  \item ログアウト機能 \\
+  ログアウトが可能である.
+
+  \item 投稿機能 \\
+ご意見を投稿することが出来る.
+ご意見のタイトル,内容,回答して欲しいユーザー種別と所属・学部/学科,画像を設定して投稿することが可能.
+
+  \item ご意見一覧機能 \\
+投稿されたご意見を表示する.
+投稿者のニックネーム,ユーザー種別,所属・学部/学科,投稿日時,回答対象,ご意見のタイトル,内容,アップロードされた画像,コメント数が表示される.
+ 
+
+  \item ご意見・コメント削除機能 \\
+投稿されたご意見,コメントを削除することが可能.
+ただし,自分が投稿したご意見,コメントのみを削除可能である.
+
+  \item ご意見・コメントの編集機能 \\
+ご意見の内容とコメントの編集をすることが可能.
+
+  \item コメント機能 \\
+投稿されたご意見に対して,コメントを投稿することが可能.
+
+  \item リアクション機能 \\
+  コメントに対して,リアクションを付与・削除できる.
+  リアクションの種類は,いいね,ハート,拍手の３種類である.
+
+  \item ベストアンサー機能 \\
+ ベストアンサーとは,投稿者が最も役に立ったコメントに印を付与・削除できるシステムである.
+ ご意見の投稿者がコメントに対してベストアンサーを付与・削除できる.
+
+  \item ユーザープロフィール機能 \\
+  ユーザープロフィールを設定することが可能.
+  ユーザープロフィールとは,ユーザープロフィール画像の設定,ニックネーム,ユーザー種別,所属・学部/学科の表示がされる.
+  
+  \item 投稿したご意見,コメントしたご意見の表示機能 \\
+  該当するユーザーの投稿したご意見,コメントしたご意見を閲覧可能.
+
+  \item プロフィール画面への遷移機能 \\
+  ニックネームを押下すると,該当するユーザーのプロフィール画面へ遷移する.
+
+  \item 検索機能・ソート機能 \\
+  ご意見の検索,ソートが可能.
+  検索機能は,ご意見のタイトル,内容,投稿者のニックネーム,ユーザー種別,回答して欲しいユーザー種別の５項目から検索可能である.
+  ソート機能では,投稿されたご意見の作成日時に基づいて,古い順または新しい順にご意見の並び替えを行う.
+  また,ご意見に対するコメント数の多い順に並び替えられる.
+
+  \item ユーザー種別の設定 \\
+  ユーザー種別は,教員・学生・職員・その他から設定できる.
+  自身のユーザー種別の設定,投稿したご意見に対して回答して欲しいユーザー種別を設定できる.
+
+  \item 所属・学部/学科の設定 \\
+  所属・学部/学科は,所属や学部/学科を自由記述できる.
+  自身の所属・学部/学科の設定,投稿したご意見に対して回答して欲しい所属・学部/学科を設定できる.
 \end{enumerate}
 
-\subsection{引用と参考文献}
+\subsection{ご意見BOXの機能一覧（バックエンド）}\label{sec:function-back}
+本研究で設計したご意見のバックエンドサーバーの機能は以下のとおりである.
 
-重要な内容は以下のように引用できます:
+\begin{enumerate}
+  \item 投稿API \\
+  ご意見の投稿,取得,編集,削除
 
-\begin{quote}
-ここに引用文を記述します。長い引用や重要な文章を強調する際に使用します。
-\end{quote}
+  \item コメントAPI \\
+  コメントの投稿,取得,編集,削除
 
+  \item 認証API \\
+  ログイン認証とセッション管理
+
+  \item ファイルアップロードAPI \\
+  投稿やコメント時にアップロードされた画像,アップロードされたプロフィール画像および,画像パスの保存
+  
+  \item CORS設定 \\
+  VueフロントエンドとExpressバックエンド間の安全な通信の実現
+\end{enumerate}
+
+%3.3
+\subsection{画面遷移}
+ご意見BOXのフロントエンドの画面遷移図を(図\ref{fig:sennizu})に表示する.
+
+% 図の挿入
+\begin{figure}[htb]
+\centering
+\includegraphics[width=\linewidth]{img/senizu3.png}
+\caption{画面遷移図}
+\label{fig:sennizu}
+\end{figure}
+
+
+%4
+\section{ご意見BOXの実装}
+\label{config}
+
+本システムを開発するにあたって,SCSK株式会社が運営するminiApp Platfromを利用した.
+
+%4.1
+\subsection{miniApp Platform}
+本研究では,SCSK株式会社が運営するminiApp Platformを利用してご意見BOXを開発した.
+以下にminiapp Platformの概要を示す\cite{bid:miniApp Platform}.
+また,miniApp Platformを利用したメリットについて述べる.
+
+%4.2
+\subsection{miniApp Platformの概要}
+miniApp PlatformはSCSK株式会社が運営するサービスである.
+また,miniApp Platformとは,モバイルアプリ上でミニアプリを簡単に配信・管理できるプラットフォームである.
+一般的なアプリ開発では,アプリ開発をした後にアプリストアの申請を待ち,許可を得てからリリースできる流れである.
+このため,開発した機能が利用できるまでに時間がかかる.
+一方で,miniApp Platformは,すぐにリリースが出来るという特長を持つ.
+具体的には,SCSK株式会社が提供するSDKを導入し,ミニアプリを開発してミニアプリ管理サイトにアップロードするだけでミニアプリをリリースできるという流れである.
+自身が開発する部分は,フロントエンドとバックエンドである.
+開発したものをminiApp Platformが提供するMiniSDK(forHost),ミニアプリ基盤API,ミニアプリ管理サイトと連携してミニアプリを実現できる.
+そのため,ローコスト・ローリスクでアイデアを新機能として実装できるメリットがある.
+また,ミニアプリは一般的なweb技術やノーコード・ローコードツールでも開発できるため,容易に開発できる.
+
+以下にMiniSDK(forHost),ミニアプリ基盤API,ミニアプリ管理サイトの用語説明を記す.
+
+\begin{itemize}
+  \item MiniSDK(forHost)：ミニアプリからホストアプリやミニアプリ基盤の機能を実行するためのSDK.TypeScriptで提供している.MiniSDK(forHost)を介してミニアプリからホストアプリやミニアプリ基盤と情報のやりとりをしたり,ログを送信したりする機能などを提供する.
+  \item ミニアプリ基盤API：ミニアプリ基盤の機能を利用するためのAPI.ミニアプリバックエンドから呼び出し,時間同期,ミニアプリ起動時のユーザー識別フロー,プッシュメッセージなどの機能を提供する.
+  \item ミニアプリ管理サイト：ミニアプリ開発者向けに提供される管理プラットフォームで,ミニアプリの管理,ミニアプリのメタ情報の設定,MiniSDK(forHost)のダウンロード,実行状況の確認などの機能がある.
+\end{itemize}
+
+\subsection{miniApp Platformを利用したメリット}
+miniApp Platformを利用したメリットはアプリのリリースが容易である点である.
+通常,アプリをリリースするにはApple StoreやGoogle Playといったストアへ申請し,リリースの許可を得る必要がある.
+しかし,miniApp Platformはこれを省くことができる.
+本研究では,SCSK株式会社が提供するホストアプリの中にミニアプリとしてリリースすることで,ストアの申請や許可を待つ手間を省くことができた.
+開発したものをミニアプリ管理サイトにアップロードするだけでリリースできる.
+
+
+\subsection{実装環境(フロントエンド)}\label{sec:environment1}
+ご意見BOXのフロントエンド実装環境を表\ref{table:実装環境（フロントエンド）}に示す.
+
+\begin{table}[htbp]
+  \caption{ご意見BOXの実装環境(フロントエンド)}\label{table:実装環境（フロントエンド）}
+  \centering
+  \begin{tabular}{|l|l|l|c|c|p{3cm}|}
+    \hline
+    %ヘッダー行だけ,全項目中央寄せにしてみた
+    \multicolumn{1}{|c|}{用途} & \multicolumn{1}{c|}{名称} & \multicolumn{1}{c|}{バージョン} \\
+    \hline
+    \hline
+    使用言語 & JavaScript & -   \\
+    \hline
+    パッケージマネージャー & npm & 10.9.2  \\
+    \hline
+    フレームワーク & Vue & 3.5.12   \\
+    \hline
+    画面遷移 & Vue Router & 4.4.5   \\
+    \hline
+    サーバーとデータの送受信 & axios & 1.12.2  \\
+    \hline
+    状態管理 & Pinia & 3.0.3  \\
+    \hline 
+    ビルドツール & Vite & 5.4.21  \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsubsection{JavaScript}\label{sec:JavaScript}
+JavaScriptは軽量なインタープリンター型のプログラミング言語である\cite{bid:js}.
+本システムでは,ご意見BOXの記述言語として使用している.
+
+\subsubsection{npm}\label{sec:npm}
+npmは,Node.jsのパッケージマネージャーである\cite{bid:npm}.
+本システムで使用するパッケージの管理に使用している.
+
+\subsubsection{Vue}\label{sec:Vue}
+ユーザーインターフェースの構築のための JavaScript フレームワークである\cite{bid:Vue}.
+本システムでは,フロントエンドで使用している.
+
+\subsubsection{Vue Router}\label{sec:Vue Router}
+Vue.jsを利用してシングルページアプリケーション(SPA)を構築する\cite{bid:VueRouter}.
+本システムでは,画面遷移に使用している.
+
+\subsubsection{Axios}\label{sec:Axios}
+Node.jsとブラウザのためのPromiseベースのHTTPクライアントライブラリである\cite{bid:axios}.
+本システムでは,サーバーとデータの送受信に使用している.
+
+\subsubsection{Pinia}\label{sec:Pinia}
+コンポーネントやページ間で状態を共有できるVueのストアライブラリである\cite{bid:Pinia}.
+本システムでは,投稿データ及び認証状態確認に使用している.
+
+\subsubsection{Vite}\label{sec:Vite}
+フロントエンド開発を高速化するための次世代ビルドツールである\cite{bid:Vite}.
+本システムでは,フロントエンド開発を高速化するために使用している.
+
+\subsection{実装した機能}\label{sec:function}
+ご意見BOXのフロントエンドに実装した機能は以下の通りである.
+
+\begin{itemize}
+  \item ログイン機能
+  \item 新規登録機能
+  \item ログアウト機能
+  \item 投稿機能
+  \item ご意見一覧機能
+  \item 投稿削除機能
+  \item コメント機能
+  \item リアクション機能
+  \item ベストアンサー機能
+  \item ユーザープロフィール機能
+  \item 投稿したご意見,コメントしたご意見の表示機能
+  \item プロフィール画面への遷移機能
+\end{itemize}
+
+\subsection{実装した画面}\label{sec:screen}
+ご意見BOXのフロントエンドに実装した画面は以下のとおりである\begin{itemize}
+  \item ログイン・新規登録画面
+  \item ログイン画面
+  \item 新規登録画面
+  \item ホーム画面
+  \item コメント画面
+  \item 投稿画面
+  \item ユーザープロフィール画面
+\end{itemize}
+
+\subsubsection{ログイン・新規登録画面}\label{sec:auth}
+ユーザーが本システムを利用する際,まず初めに表示される画面である(図\ref{fig:auth}).
+この画面では,ログイン画面(\ref{sec:login})と新規登録画面(\ref{sec:register})へ遷移することが出来る.
+
+% 図の挿入
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.3\linewidth]{img/auth2.jpg}
+\caption{ログイン・新規登録画面}
+\label{fig:auth}
+\end{figure}
+
+\subsubsection{ログイン画面}\label{sec:login}
+ユーザーが本システムにログインする際,表示される画面である(図\ref{fig:login}).
+この画面は,ログインに必要なユーザーIDとパスワードを入力することが出来る.
+正しいユーザーIDとパスワードが入力されるとログインに成功する.
+成功した後は,ホーム画面(\ref{sec:home})に遷移する.
+
+% 図の挿入
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.3\linewidth]{img/login2.jpg}
+\caption{ログイン画面}
+\label{fig:login}
+\end{figure}
+
+\subsubsection{新規登録画面}\label{sec:register}
+新規登録ボタンを押下した際,表示される画面である(図\ref{fig:register}).
+ユーザーのアカウントを新規登録することが出来る.
+具体的には,本システムを利用するのに必要なユーザーのニックネーム,ユーザー種別,所属・学部/学科,ユーザーID,パスワードを登録することが出来る.
+新規登録に成功すると,ログイン画面(\ref{sec:login})に遷移する.
+
+% 図の挿入
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.3\linewidth]{img/register5.jpg}
+\caption{新規登録画面}
+\label{fig:register}
+\end{figure}
+
+\subsubsection{ホーム画面}\label{sec:home}
+ログインに成功した際,はじめに表示される画面である(図\ref{fig:home}).
+この画面では,投稿する画面(\ref{sec:post})への遷移,ユーザープロフィール画面(\ref{sec:profile})への遷移,コメント画面(\ref{sec:comments})への遷移ができる.
+また,ご意見の検索・ソートが可能である.
+ご意見の検索は,ご意見のタイトル,内容,投稿者のニックネーム,ユーザー種別,回答して欲しいユーザー種別の５項目から検索可能である.
+ご意見のソートは,投稿されたご意見の作成日時に基づいて,古い順または新しい順にご意見の並び替えを行う.
+また,ご意見に対するコメント数の多い順に並び替えられる.
+
+% 図の挿入
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.3\linewidth]{img/home2.jpg}
+\caption{ホーム画面}
+\label{fig:home}
+\end{figure}
+
+\subsubsection{コメント画面}\label{sec:comments}
+投稿一覧に表示されるご意見を押下すると,表示される画面である（図\ref{fig:comments}）（図\ref{fig:comments2}）.
+この画面では,ご意見に対してコメントを投稿出来る.
+また,投稿されたコメントに対してリアクションを付与・削除できる.
+ご意見の投稿主である場合,コメントにベストアンサーを１つ付与できる.
+
+% 図の挿入
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.28\linewidth]{img/com1a.jpg}
+\caption{コメント画面（ご意見の表示）}
+\label{fig:comments}
+\end{figure}
+
+% 図の挿入
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.28\linewidth]{img/com2a.jpg}
+\caption{コメント画面の機能}
+\label{fig:comments2}
+\end{figure}
+
+\subsubsection{投稿画面}\label{sec:post}
+投稿するボタンを押下した際,表示される画面である(図\ref{fig:post}).
+この画面では,ご意見のタイトル,内容,画像のアップロード,回答して欲しいユーザー種別,回答して欲しい所属・学部/学科を設定出来る.
+投稿するを押下すると投稿される.
+
+% 図の挿入
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.25\linewidth]{img/post5.jpg}
+\caption{投稿画面}
+\label{fig:post}
+\end{figure}
+
+\subsubsection{ユーザープロフィール画面}\label{sec:profile}
+プロフィールアイコンを押下した際,表示される画面である(図\ref{fig:profile}).
+この画面では,ユーザーのプロフィール画像の設定,ユーザーの投稿したご意見とコメントしたご意見を閲覧することが出来る.
+
+% 図の挿入
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.3\linewidth]{img/profile1.jpg}
+\caption{ユーザープロフィール画面}
+\label{fig:profile}
+\end{figure}
+
+\subsection{実装環境（バックエンド）}\label{sec:environment2}
+ご意見BOXの実装環境（バックエンド）を表\ref{table:実装環境（バックエンド）}に示す。
+
+\begin{table}[htbp]
+  \caption{ご意見BOXの実装環境(バックエンド)}\label{table:実装環境（バックエンド）}
+  \centering
+  \begin{tabular}{|l|l|l|c|c|p{3cm}|}
+    \hline
+    %ヘッダー行だけ、全項目中央寄せにしてみた
+    \multicolumn{1}{|c|}{用途} & \multicolumn{1}{c|}{名称} & \multicolumn{1}{c|}{バージョン} \\
+    \hline
+    \hline
+    使用言語 & JavaScript & -   \\
+    \hline
+    実行環境 & Node.js & 22.15.0   \\
+    \hline
+    フレームワーク & Express & 5.1.0  \\
+    \hline
+    データベース & MySQL & 8.0   \\
+    \hline
+    認証 & JWT & 9.0.2   \\
+    \hline
+    パスワードのハッシュ化 & bcrypt &6.0.0   \\
+    \hline
+    画像アップロード処理 & multer & 2.0.2   \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsubsection{Node.js}\label{sec:Node.js}
+Node.jsはクロスプラットフォームに対応したフリーでオープンソースのJavaScript実行環境である\cite{bid:Node.js}。
+本システムでは、ご意見BOXの動作環境として使用している。
+
+\subsubsection{Express}\label{sec:Express}
+Express.jsは、Node.jsのための軽量で柔軟なWebアプリケーションフレームワークである。
+\cite{bid:express}。
+本システムでは、バックエンドサーバーのフレームワークとして使用している。
+
+\subsubsection{MySQL}\label{sec:MySQL}
+MySQLは、Oracle社により開発されたオープンソースのリレーショナルデータベース管理システムである\cite{bid:MySQL}。
+本システムでは、データベースとして使用している。
+
+\subsubsection{JWT認証}\label{sec:JWT認証}
+JWTは、ユーザー認証や情報の安全なやり取りに用いられるトークン形式の一種で、JSON形式のデータをコンパクトにエンコードしたものである
+\cite{bid:JWT認証}。
+本システムでは、トークン認証として使用している。
+
+\subsubsection{bcrypt}\label{sec:bcrypt}
+パスワードを安全にハッシュ化するためのアルゴリズムである\cite{bid:bcrypt}。
+本システムでは、パスワードハッシュ化の役割を担っている。
+
+\subsubsection{multer}\label{sec:multer}
+Node.jsのミドルウェアで、主にファイルのアップロードを処理するためのミドルウェアである\cite{bid:multer}。
+本システムでは、画像アップロード処理の役割を担っている。
+
+
+%5
+\section{評価}
+本章では,評価内容,評価結果,考察について述べる.
+
+\section{評価内容}
+本研究では,九州産業大学の学生にご意見BOXを利用してもらい評価実験を行った.
+アンケートの回答は４段階評価と自由記述形式を組み合わせたものとなっている.
+
+4段階評価の選択肢の内容は以下のとおりである.
+
+\begin{enumerate}
+  \item そう思わない
+  \item どちらかといえばそう思わない
+  \item どちらかといえばそう思う
+  \item そう思う
+\end{enumerate}
+
+
+%5.2
+\subsection{評価結果}
+九州産業大学の学生にアンケートの回答を求めたところ,6名からのアンケートの回答が得られた.アンケート結果を表\ref{tabel:questions}示す.自由記述の回答内容を以下に示す.
+
+\begin{table}[htbp]
+  \caption{アンケート結果}\label{tabel:questions}
+  \begin{tabularx}{\linewidth}{|X|c|}
+    \hline
+    \multicolumn{1}{|c|}{アンケート項目} & \multicolumn{1}{c|}{平均} \\
+    \hline
+    Q1. 「ご意見BOX」を使うことで,広範囲から意見を募ることができ,悩み解決の有効打を獲得できましたか. & 2.5 \\
+    \hline
+    Q3. 他者のユーザープロフィールで該当するユーザーの投稿・コメントしたご意見を閲覧できる機能は役に立ちましたか. & 2.5 \\
+    \hline
+    Q5. ご意見の検索機能は役に立ちましたか. & 2.8 \\
+    \hline
+    Q7. 回答して欲しいユーザー種別や所属・学部/学科を指定できる機能は役に立ったか. & 2.1 \\
+    \hline
+    Q9. ベストアンサー機能やリアクション機能は役に立ったか. & 3.2 \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\begin{itemize}
+  \item 「Q2. Q1のように回答した理由を教えてください.」への回答
+  \begin{itemize}
+    \item 投稿した内容に対して回答があまり得られなかった.
+    \item 自身の作成したシステムに対して複数人から意見をもらえた.もらった意見をもとに機能の改善や,今後の改善点の発見ができた.
+  \end{itemize}
+
+  \item 「Q4. Q3のように回答した理由を教えてください.」への回答
+  \begin{itemize}
+    \item あまり使う機会がなかった.
+    もっと多くの人が使用すれば使う機会があると思う.
+    \item 他者からの回答が得られなかったので,その機能を使う機会もなかったから.
+  \end{itemize}
+
+  \item 「Q6. Q5のように回答した理由を教えてください.」への回答
+  \begin{itemize}
+    \item 検索結果のレスポンスがとても速いのはとてもいいと思った.\\しかし,ソート機能がAndroidでは使えなかった.
+    \item 投稿されている意見が少ないのでその機能を使うことがなかった.
+  \end{itemize}
+
+  \item 「Q8. Q7のように回答した理由を教えてください.」への回答
+  \begin{itemize}
+    \item Androidでプルダウンメニューの選択が出来ない.
+    \item 全員から意見を集めたい場合にもユーザー種別を選ばないといけないので,どうしたらいいかわからなかった.
+  \end{itemize}
+
+  \item 「Q10. Q9のように回答した理由を教えてください.」への回答
+  \begin{itemize}
+    \item ベストアンサーが回答の中で一番最初にくるから探しやすい.
+    \item 相手が自分の意見を見たことが分かる.
+  \end{itemize}
+
+  \item 「Q11. 最後に,何かご意見がありましたらお願いします.」への回答
+  \begin{itemize}
+    \item 全体的にアプリ操作が簡単であるところが良かった.
+    初めてでも使いやすいので,多くの人に使ってもらい普及すれば,たくさん意見が投稿され,回答も得られると思う.
+    \item Androidでも一部機能が動くように頑張ってください.
+  \end{itemize}
+\end{itemize}
+
+
+%5.3
+\subsection{考察}
+アンケートの結果について考察を述べる.
+設問1～設問9の平均点は2.1～3.2点の間となり,特定の機能で高い評価を得た一方で,システム全体としては改良の余地があることが示された.
+
+設問1,3,5において,「回答が得にくいまたは得られなかったため,機能を使う機会がなかった」という回答が散見された.
+これは,ユーザー数の獲得が十分ではなく,結果として投稿数が不足していることが原因だと考える.
+設問7が他の設問と比較して低い評価である要因は,Android端末におけるプルダウンの動作不備であると考えられる.
+これは,特定のモバイル端末において動作の最適化が不足していたことが要因だと考える.
+また,「全員から意見を集める際の選択肢が不明瞭である」という回答も得られた.
+これは,回答して欲しいユーザー種別の網羅性や自由度に改善の余地があることを示唆している.
+
+一方で,設問5や設問9では,「検索結果のレスポンスが早い」,「ベストアンサーが最上部に表示されており目的の情報に到達しやすい」という肯定的な評価を得られた.
+これは目的の情報への到達しやすさを狙った設計がユーザー体験の向上に寄与できたことを示唆している.
+
+また,設問1では,「自身の作成したシステムに対して複数人から意見をもらえた.もらった意見をもとに機能の改善や,今後の改善点の発見ができた.」という回答が得られた.
+これは,ご意見の投稿・コメントの投稿機能が正常に機能しており,本システムが悩み解決の手段として成立していることを示唆している.
+
+以上のことから,悩み事をご意見として投稿し広範囲からカジュアルな意見を募ることができるデジタルプラットフォームとしての一定の有用性は確認できたといえる.
+一方で,学内ユーザーの悩み解決を促す新たな解決手段としての可能性は十分に示唆されたものの,ユーザー数の獲得や特定端末での動作不備といった課題点が浮き彫りになった.
+
+今後は,マルチデバイスへの技術的な最適化と,ユーザー数の獲得や投稿意欲を高める施策を講じることで本システムの真価を発揮できるものと考えられる.
+
+
+%6
 \section{まとめ}
+現在,学内には意見交換を行える掲示板やアプリといったデジタルプラットフォームが存在しない.
+そのため,カジュアルな意見を広範囲から募ろうと考えると,有効な手段を探すのは難しい現状がある.
+この現状を解決するには悩み事をご意見という形で投稿し,それにコメントできるデジタルプラットフォームを構築する必要があると考えた.
+本研究の目的は,広範囲からカジュアルな意見を募ることができる手段を増やすことである.
+目標達成のために,広範囲からカジュアルな意見交換ができる「ご意見 BOX」を開発した.
 
-このテンプレートを基に、目的に応じてカスタマイズしてください。LaTeX文書作成の効率向上に役立てていただければ幸いです。
+本研究では,九州産業大学の学生にご意見 BOX を利用してもらい,アンケートによる
+評価実験を行った.アンケートの結果から,ご意見の投稿・コメントの投稿機能が正常に
+動作しており,本システムが学内ユーザーの悩み解決を促す新たな手段として成立してい
+るといえる.一方で,特定端末におけるプルダウン操作の不具合といった技術的な課題
+や,ユーザー数や投稿数が少ないために十分に機能が活用されなかったという運用面での
+課題点が明らかになった.今後は,マルチデバイスへの技術的な最適化と,ユーザー数の
+獲得やユーザーの投稿意欲を高める施策を講じることで本システムの真価を発揮できるものと考えられる.
+
+\section{今後の課題}\label{sec:kadai}
+本研究の今後の課題は以下のとおりである.
+
+\begin{enumerate}
+  \item ご意見・コメントの編集機能の実装
+  \item コメントの削除機能の実装
+  \item ベストアンサーの削除機能の実装
+  \item Androidの一部動作しない問題の解消
+  \item ユーザー数の獲得・投稿意欲の向上
+  \item UIの改良
+\end{enumerate}
+
+1つ目は,ご意見・コメント内容の編集機能の実装である.
+本研究中に,ご意見・コメント内容の編集機能を実装できなかったため,ご意見・コメント内容の編集機能の実装が課題である.
+ご意見・コメントの内容の編集機能を実装することで,誤字や情報の修正が可能となりユーザーの満足度向上に繋がると考えられる.
+
+2つめは,コメントの削除機能の実装である.
+本研究中に,コメントの削除機能の実装が間に合わなかっため,削除機能の実装が課題である.
+コメントの削除機能を実装することで,気楽にコメントを投稿できると考えられる.
+
+3つめは,ベストアンサーの削除機能の実装である.
+本研究中にベストアンサーの削除機能を実装できなかったため,削除機能の実装が課題である.
+ベストアンサーの削除機能を実装することで,誤ってベストアンサーを付与した際に削除できるためユーザーの満足度が向上すると考えられる.
+
+4つ目は,Androidの一部動作しない問題の解消である.
+プルダウンによる選択が出来ない問題の解消が課題である.
+プルダウンによる選択が出来ない問題を解消することで,Androidユーザーの利用者が拡大すると考えられる.
+
+5つ目は,ユーザー数の獲得・投稿意欲の向上が課題である.
+ユーザー数が不足しているため投稿してもコメントを得にくいため,投稿意欲が低いという現状がある.
+ユーザー数の獲得・投稿意欲の向上を実現することで,投稿数が増加し,コメントを得やすくなると考えられる.
+
+6つ目はUIの改良が課題である.
+UIを改良することで,ご意見のタイトルや内容の視認性や機能の利便性が向上すると考えられる.
+その結果,ユーザーの満足度が向上すると考えられる.
+
+
+\begin{thebibliography}{10}
+
+
+
+\bibitem{bid:miniApp Platform}
+miniApp Platform - ミニアプリ基盤 TOP(online),
+
+\urlj{https://www.scsk.jp/sp/miniapp/}
+
+\bibitem{bid:js}
+JavaScript - MDN Web Does - Mozilla(online),
+
+\urlj{https://developer.mozilla.org/ja/docs/Web/JavaScript}
+
+\bibitem{bid:npm}
+npm | Home(online),
+
+\urlj{https://www.npmjs.com/about}
+
+\bibitem{bid:Vue}
+Vue.js(online),
+
+\urlj{https://ja.vuejs.org/}
+
+\bibitem{bid:VueRouter}
+Vue Router | The official Router for Vue.js(online),
+
+\urlj{ https://router.vuejs.org/guide/}
+
+\bibitem{bid:axios}
+Axios 入門 | Axios Docs(online),
+
+\urlj{ https://axios-http.com/ja/docs/intro}
+
+\bibitem{bid:Pinia}
+Pinia | The intuitive store for Vue.js(online),
+
+\urlj{https://pinia.vuejs.org/introduction.html}
+
+\bibitem{bid:Vite}
+Vite | 次世代フロントエンドツール(online),
+
+\urlj{https://ja.vite.dev/}
+
+\bibitem{bid:Node.js}
+Node.js --どこでもJavaScriptを使おう(online),
+
+\urlj{https://nodejs.org/ja}
+
+\bibitem{bid:express}
+Express.js入門 | Node.jsで効率的なWeb開発を実現する方法(online),
+
+\urlj{https://qiita.com/ryome/items/16659012ed8aa0aa1fac}
+
+\bibitem{bid:MySQL}
+MySQLとは（初心者向け入門編）(online),
+
+\urlj{ https://kinsta.com/jp/blog/what-is-mysql/ }
+
+\bibitem{bid:JWT認証}
+JSON Web Tokenの概要(online),
+
+\urlj{https://www.sms-datatech.co.jp/securitynow/articles/blog/sec\_jwt/}
+
+\bibitem{bid:bcrypt}
+Bcrypt ハッシュ 暗号(online),
+
+\urlj{https://qiita.com/daiki7010/items/b15de9ef747f5b23c984}
+
+\bibitem{bid:multer}
+Multer(online),
+
+\urlj{https://www.npmjs.com/package/multer}
+
+\end{thebibliography}
 
 \end{document}
