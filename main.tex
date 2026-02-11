@@ -50,13 +50,13 @@ Fukuoka 813-8529, Japan}
 \author{下川 俊彦}{Shimokawa Toshihiko}{KSU}
 
 \begin{abstract}
-本学において、悩み解決のためにカジュアルな意見を広範囲から募るのは難しい現状がある。
-本研究は、学内における悩み解決を実現するため、投稿・閲覧・コメントが可能なデジタルプラットフォーム「ご意見BOX」を開発した。
-本システムは、フロントエンドにVue.js、バックエンドにNode.jsを採用して実装した。
-評価実験の結果、システムの正常な動作を確認した。
-これは、悩み解決の手段として成立したことを示唆する。
-一方で、操作不具合や、ユーザー数や投稿数の不足による運用面の課題点が浮き彫りとなった。
-今後は、マルチデバイスへの技術的な最適化とユーザー数の獲得・投稿意欲の向上を高める施策を講じることでシステムの真価を発揮できると考える。
+本学において,悩み解決のためにカジュアルな意見を広範囲から募るのは難しい現状がある.
+本研究は,学内における悩み解決を実現するため,投稿・閲覧・コメントが可能なデジタルプラットフォーム「ご意見BOX」を開発した.
+本システムは,フロントエンドにVue.js,バックエンドにNode.jsを採用して実装した.
+評価実験の結果,システムの正常な動作を確認した.
+これは,悩み解決の手段として成立したことを示唆する.
+一方で,操作不具合や,ユーザー数や投稿数の不足による運用面の課題点が浮き彫りとなった.
+今後は,マルチデバイスへの技術的な最適化とユーザー数の獲得・投稿意欲を高める施策を講じることでシステムの真価を発揮できると考える.
 \end{abstract}
 
 
@@ -131,7 +131,7 @@ At our university, gathering diverse casual opinions to address personal or camp
   \item 新規登録機能 \\
    ユーザーのアカウントを新規登録するための画面を表示する.
    ユーザーのログイン情報,ご意見BOXを利用するにあたって必要な情報を登録する.
-   具体的に登録できる情報は,ニックネーム,ユーザー種別,所属・学部/学科,ユーザーID,パスワードの6種類である.
+   具体的に登録できる情報は,ニックネーム,ユーザー種別,所属・学部/学科,ユーザーID,パスワードの5種類である.
 
   \item ログアウト機能 \\
   ログアウトが可能である.
@@ -165,7 +165,7 @@ At our university, gathering diverse casual opinions to address personal or camp
 
   \item ユーザープロフィール機能 \\
   ユーザープロフィールを設定することが可能.
-  ユーザープロフィールとは,ユーザープロフィール画像の設定,ニックネーム,ユーザー種別,所属・学部/学科の表示がされる.
+  ユーザープロフィールでは,ユーザープロフィール画像の設定,ニックネーム,ユーザー種別,所属・学部/学科の表示ができる.
   
   \item 投稿したご意見,コメントしたご意見の表示機能 \\
   該当するユーザーの投稿したご意見,コメントしたご意見を閲覧可能.
@@ -189,7 +189,7 @@ At our university, gathering diverse casual opinions to address personal or camp
 \end{enumerate}
 
 \subsection{ご意見BOXの機能一覧（バックエンド）}\label{sec:function-back}
-本研究で設計したご意見のバックエンドサーバーの機能は以下のとおりである.
+本研究で設計したご意見BOXのバックエンドサーバーの機能は以下のとおりである.
 
 \begin{enumerate}
   \item 投稿API \\
@@ -210,7 +210,7 @@ At our university, gathering diverse casual opinions to address personal or camp
 
 %3.3
 \subsection{画面遷移}
-ご意見BOXのフロントエンドの画面遷移図を(図\ref{fig:sennizu})に表示する.
+ご意見BOXのフロントエンドの画面遷移図を(図\ref{fig:sennizu})に示す.
 
 % 図の挿入
 \begin{figure}[htb]
@@ -230,7 +230,7 @@ At our university, gathering diverse casual opinions to address personal or camp
 %4.1
 \subsection{miniApp Platform}
 本研究では,SCSK株式会社が運営するminiApp Platformを利用してご意見BOXを開発した.
-以下にminiApp Platformの概要を示す\cite{bid:miniApp Platform}.
+以下にminiApp Platformの概要を示す\cite{bib:miniApp Platform}.
 また,miniApp Platformを利用したメリットについて述べる.
 
 %4.2
@@ -256,7 +256,7 @@ miniApp PlatformはSCSK株式会社が運営するサービスである.
 
 \subsection{miniApp Platformを利用したメリット}
 miniApp Platformを利用したメリットはアプリのリリースが容易である点である.
-通常,アプリをリリースするにはApple StoreやGoogle Playといったストアへ申請し,リリースの許可を得る必要がある.
+通常,アプリをリリースするにはApp StoreやGoogle Playといったストアへ申請し,リリースの許可を得る必要がある.
 しかし,miniApp Platformはこれを省くことができる.
 本研究では,SCSK株式会社が提供するホストアプリの中にミニアプリとしてリリースすることで,ストアの申請や許可を待つ手間を省くことができた.
 開発したものをミニアプリ管理サイトにアップロードするだけでリリースできる.
@@ -292,31 +292,31 @@ miniApp Platformを利用したメリットはアプリのリリースが容易�
 \end{table}
 
 \subsubsection{JavaScript}\label{sec:JavaScript}
-JavaScriptは軽量なインタープリター型のプログラミング言語である\cite{bid:js}.
+JavaScriptは軽量なインタープリター型のプログラミング言語である\cite{bib:js}.
 本システムでは,ご意見BOXの記述言語として使用している.
 
 \subsubsection{npm}\label{sec:npm}
-npmは,Node.jsのパッケージマネージャーである\cite{bid:npm}.
+npmは,Node.jsのパッケージマネージャーである\cite{bib:npm}.
 本システムで使用するパッケージの管理に使用している.
 
 \subsubsection{Vue}\label{sec:Vue}
-ユーザーインターフェースの構築のための JavaScript フレームワークである\cite{bid:Vue}.
+ユーザーインターフェースの構築のための JavaScript フレームワークである\cite{bib:Vue}.
 本システムでは,フロントエンドで使用している.
 
 \subsubsection{Vue Router}\label{sec:Vue Router}
-Vue.jsを利用してシングルページアプリケーション(SPA)を構築する\cite{bid:VueRouter}.
+Vue.jsを利用してシングルページアプリケーション(SPA)を構築する\cite{bib:VueRouter}.
 本システムでは,画面遷移に使用している.
 
 \subsubsection{Axios}\label{sec:Axios}
-Node.jsとブラウザのためのPromiseベースのHTTPクライアントライブラリである\cite{bid:axios}.
+Node.jsとブラウザのためのPromiseベースのHTTPクライアントライブラリである\cite{bib:axios}.
 本システムでは,サーバーとデータの送受信に使用している.
 
 \subsubsection{Pinia}\label{sec:Pinia}
-コンポーネントやページ間で状態を共有できるVueのストアライブラリである\cite{bid:Pinia}.
+コンポーネントやページ間で状態を共有できるVueのストアライブラリである\cite{bib:Pinia}.
 本システムでは,投稿データ及び認証状態確認に使用している.
 
 \subsubsection{Vite}\label{sec:Vite}
-フロントエンド開発を高速化するための次世代ビルドツールである\cite{bid:Vite}.
+フロントエンド開発を高速化するための次世代ビルドツールである\cite{bib:Vite}.
 本システムでは,フロントエンド開発を高速化するために使用している.
 
 \subsection{実装した機能}\label{sec:function}
@@ -482,29 +482,29 @@ Node.jsとブラウザのためのPromiseベースのHTTPクライアントラ�
 \end{table}
 
 \subsubsection{Node.js}\label{sec:Node.js}
-Node.jsはクロスプラットフォームに対応したフリーでオープンソースのJavaScript実行環境である\cite{bid:Node.js}.
+Node.jsはクロスプラットフォームに対応したフリーでオープンソースのJavaScript実行環境である\cite{bib:Node.js}.
 本システムでは,ご意見BOXの動作環境として使用している.
 
 \subsubsection{Express}\label{sec:Express}
-Express.jsは,Node.jsのための軽量で柔軟なWebアプリケーションフレームワークである.
-\cite{bid:express}
+Express.jsは,Node.jsのための軽量で柔軟なWebアプリケーションフレームワークである
+\cite{bib:express}.
 本システムでは,バックエンドサーバーのフレームワークとして使用している.
 
 \subsubsection{MySQL}\label{sec:MySQL}
-MySQLは,Oracle社により開発されたオープンソースのリレーショナルデータベース管理システムである\cite{bid:MySQL}.
+MySQLは,Oracle社により開発されたオープンソースのリレーショナルデータベース管理システムである\cite{bib:MySQL}.
 本システムでは,データベースとして使用している.
 
 \subsubsection{JWT認証}\label{sec:JWT認証}
 JWTは,ユーザー認証や情報の安全なやり取りに用いられるトークン形式の一種で,JSON形式のデータをコンパクトにエンコードしたものである
-\cite{bid:JWT認証}.
+\cite{bib:JWT認証}.
 本システムでは,トークン認証として使用している.
 
 \subsubsection{bcrypt}\label{sec:bcrypt}
-パスワードを安全にハッシュ化するためのアルゴリズムである\cite{bid:bcrypt}.
+パスワードを安全にハッシュ化するためのアルゴリズムである\cite{bib:bcrypt}.
 本システムでは,パスワードハッシュ化の役割を担っている.
 
 \subsubsection{multer}\label{sec:multer}
-Node.jsのミドルウェアで,主にファイルのアップロードを処理するためのミドルウェアである\cite{bid:multer}.
+Node.jsのミドルウェアで,主にファイルのアップロードを処理するためのミドルウェアである\cite{bib:multer}.
 本システムでは,画像アップロード処理の役割を担っている.
 
 
@@ -671,72 +671,72 @@ UIを改良することで,ご意見のタイトルや内容の視認性や機�
 
 
 
-\bibitem{bid:miniApp Platform}
+\bibitem{bib:miniApp Platform}
 miniApp Platform - ミニアプリ基盤 TOP(online),
 
 \urlj{https://www.scsk.jp/sp/miniapp/}
 
-\bibitem{bid:js}
+\bibitem{bib:js}
 JavaScript - MDN Web Docs - Mozilla(online),
 
 \urlj{https://developer.mozilla.org/ja/docs/Web/JavaScript}
 
-\bibitem{bid:npm}
+\bibitem{bib:npm}
 npm | Home(online),
 
 \urlj{https://www.npmjs.com/about}
 
-\bibitem{bid:Vue}
+\bibitem{bib:Vue}
 Vue.js(online),
 
 \urlj{https://ja.vuejs.org/}
 
-\bibitem{bid:VueRouter}
+\bibitem{bib:VueRouter}
 Vue Router | The official Router for Vue.js(online),
 
 \urlj{https://router.vuejs.org/guide/}
 
-\bibitem{bid:axios}
+\bibitem{bib:axios}
 Axios 入門 | Axios Docs(online),
 
 \urlj{https://axios-http.com/ja/docs/intro}
 
-\bibitem{bid:Pinia}
+\bibitem{bib:Pinia}
 Pinia | The intuitive store for Vue.js(online),
 
 \urlj{https://pinia.vuejs.org/introduction.html}
 
-\bibitem{bid:Vite}
+\bibitem{bib:Vite}
 Vite | 次世代フロントエンドツール(online),
 
 \urlj{https://ja.vite.dev/}
 
-\bibitem{bid:Node.js}
+\bibitem{bib:Node.js}
 Node.js --どこでもJavaScriptを使おう(online),
 
 \urlj{https://nodejs.org/ja}
 
-\bibitem{bid:express}
+\bibitem{bib:express}
 Express.js入門 | Node.jsで効率的なWeb開発を実現する方法(online),
 
 \urlj{https://qiita.com/ryome/items/16659012ed8aa0aa1fac}
 
-\bibitem{bid:MySQL}
+\bibitem{bib:MySQL}
 MySQLとは（初心者向け入門編）(online),
 
-\urlj{https://kinsta.com/jp/blog/what-is-mysql/ }
+\urlj{https://kinsta.com/jp/blog/what-is-mysql/}
 
-\bibitem{bid:JWT認証}
+\bibitem{bib:JWT認証}
 JSON Web Tokenの概要(online),
 
 \urlj{https://www.sms-datatech.co.jp/securitynow/articles/blog/sec\_jwt/}
 
-\bibitem{bid:bcrypt}
+\bibitem{bib:bcrypt}
 Bcrypt ハッシュ 暗号(online),
 
 \urlj{https://qiita.com/daiki7010/items/b15de9ef747f5b23c984}
 
-\bibitem{bid:multer}
+\bibitem{bib:multer}
 Multer(online),
 
 \urlj{https://www.npmjs.com/package/multer}
