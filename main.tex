@@ -32,7 +32,8 @@
 
 \title{悩み解決アプリ「ご意見BOX」の開発\\}
 
-\etitle{Research on a Method for Reducing DNS Name Resolution Time Using Predictive Caching \\ }
+\etitle{
+Development of the "Goiken BOX" Problem-Solving App\\ }
 
 \affiliate{KSU}{九州産業大学理工学部情報科学科\\
 Department of Information Science, Faculty of Science and
@@ -49,15 +50,13 @@ Fukuoka 813-8529, Japan}
 \author{下川 俊彦}{Shimokawa Toshihiko}{KSU}
 
 \begin{abstract}
-学内における悩み解決の手段として,特定の個人や部署への電話・メールや対面相談,意見交換ができる掲示版やアプリといったデジタルプラットフォームが挙げられる.
-現在,学内には意見交換を行える掲示板やアプリといったデジタルプラットフォームが存在しない.
-そのため,カジュアルな意見を広範囲から募ろうと考えると,有効な手段を探すのは難しい現状がある.
-この現状を解決するには悩み事をご意見という形で投稿し,それにコメントできるデジタルプラットフォームを構築する必要があると考えた.
-本研究の目的は,広範囲からカジュアルな意見を募ることができる手段を増やすことである.
-目標達成のために,広範囲からカジュアルな意見交換ができる「ご意見 BOX」を開発した.
-本システムの中でも主要な機能は,ご意見の閲覧,ご意見の投稿,ご意見に対するコメントである.
-評価実験の結果,本システムが正常に動作しており,本システムが学内ユーザーの悩み解決を促す手段として成立しているといえる.
-一方で,特定端末での不具合やユーザー数や投稿数の不足が課題点である.
+本学において、悩み解決のためにカジュアルな意見を広範囲から募るのは難しい現状がある。
+本研究は、学内における悩み解決を実現するため、投稿・閲覧・コメントが可能なデジタルプラットフォーム「ご意見BOX」を開発した。
+本システムは、フロントエンドにVue.js、バックエンドにNode.jsを採用して実装した。
+評価実験の結果、システムの正常な動作を確認した。
+これは、悩み解決の手段として成立したことを示唆する。
+一方で、操作不具合や、ユーザー数や投稿数の不足による運用面の課題点が浮き彫りとなった。
+今後は、マルチデバイスへの技術的な最適化とユーザー数の獲得・投稿意欲の向上を高める施策を講じることでシステムの真価を発揮できると考える。
 \end{abstract}
 
 
@@ -67,12 +66,7 @@ Fukuoka 813-8529, Japan}
 %\end{jkeyword}
 %
 \begin{eabstract}
-Internet service usage requires name resolution.
-Modern web page structures include multiple external domains, making accumulated name resolution time a factor that degrades user experience.
-Therefore, this research developed a “predictive DNS caching system” aimed at reducing name resolution time.
-This system focuses on “co-occurrence” and “periodicity” derived from user access patterns.
-It applies statistical analysis to “co-occurrence” and machine learning to “periodicity” to predict and prefetch future queries.
-Simulation evaluations using pre-collected DNS query logs confirmed improved cache hit rates and reduced name resolution times compared to conventional methods, demonstrating the system's effectiveness.
+At our university, gathering diverse casual opinions to address personal or campus concerns is challenging. To solve this issue, we developed “Goiken BOX,” a digital platform for posting, viewing, and commenting on concerns within the university community. The system uses Vue.js for the frontend and Node.js for the backend. Evaluation experiments confirmed proper functionality, demonstrating its potential as a problem-solving tool. However, challenges remain, including technical bugs and limited user participation. Future improvements include multi-device optimization and strategies to expand the user base and promote active engagement across the campus community.
 \end{eabstract}
 
 %\begin{ekeyword}
@@ -83,7 +77,7 @@ Simulation evaluations using pre-collected DNS query logs confirmed improved cac
 
 %1
 \section{はじめに}
-学内における悩み解決の手段として,特定の個人や部署への電話・メールや対面相談,意見交換ができる掲示版やアプリといったデジタルプラットフォームが挙げられる.
+学内における悩み解決の手段として,特定の個人や部署への電話・メールや対面相談,意見交換ができる掲示板やアプリといったデジタルプラットフォームが挙げられる.
 現在,学内には意見交換を行える掲示板やアプリといったデジタルプラットフォームが存在しない.
 そのため,カジュアルな意見を広範囲から募ろうと考えると,有効な手段を探すのは難しい現状がある.
 この現状を解決するには悩み事をご意見という形で投稿し,それにコメントできるデジタルプラットフォームを構築する必要があると考えた.
@@ -101,7 +95,7 @@ Simulation evaluations using pre-collected DNS query logs confirmed improved cac
 \label{sec:format}
 
 目的達成のため,本研究では「ご意見BOX」を開発した.
-ご意見BOXとは,ご意見 BOX とは,学内での悩み解決のため,意見交換を行うためのアプリである.
+ご意見 BOX とは,学内での悩み解決のため,意見交換を行うためのアプリである.
 
 %3.1
 \subsection{要件定義}\label{youken}
@@ -143,7 +137,7 @@ Simulation evaluations using pre-collected DNS query logs confirmed improved cac
   ログアウトが可能である.
 
   \item 投稿機能 \\
-ご意見を投稿することが出来る.
+ご意見を投稿することができる.
 ご意見のタイトル,内容,回答して欲しいユーザー種別と所属・学部/学科,画像を設定して投稿することが可能.
 
   \item ご意見一覧機能 \\
@@ -231,21 +225,21 @@ Simulation evaluations using pre-collected DNS query logs confirmed improved cac
 \section{ご意見BOXの実装}
 \label{config}
 
-本システムを開発するにあたって,SCSK株式会社が運営するminiApp Platfromを利用した.
+本システムを開発するにあたって,SCSK株式会社が運営するminiApp Platformを利用した.
 
 %4.1
 \subsection{miniApp Platform}
 本研究では,SCSK株式会社が運営するminiApp Platformを利用してご意見BOXを開発した.
-以下にminiapp Platformの概要を示す\cite{bid:miniApp Platform}.
+以下にminiApp Platformの概要を示す\cite{bid:miniApp Platform}.
 また,miniApp Platformを利用したメリットについて述べる.
 
 %4.2
 \subsection{miniApp Platformの概要}
 miniApp PlatformはSCSK株式会社が運営するサービスである.
 また,miniApp Platformとは,モバイルアプリ上でミニアプリを簡単に配信・管理できるプラットフォームである.
-一般的なアプリ開発では,アプリ開発をした後にアプリストアの申請を待ち,許可を得てからリリースできる流れである.
+一般的なアプリ開発では,開発をした後にアプリストアの申請を待ち,許可を得てからリリースできる流れである.
 このため,開発した機能が利用できるまでに時間がかかる.
-一方で,miniApp Platformは,すぐにリリースが出来るという特長を持つ.
+一方で,miniApp Platformは,すぐにリリースができるという特長を持つ.
 具体的には,SCSK株式会社が提供するSDKを導入し,ミニアプリを開発してミニアプリ管理サイトにアップロードするだけでミニアプリをリリースできるという流れである.
 自身が開発する部分は,フロントエンドとバックエンドである.
 開発したものをminiApp Platformが提供するMiniSDK(forHost),ミニアプリ基盤API,ミニアプリ管理サイトと連携してミニアプリを実現できる.
@@ -271,7 +265,7 @@ miniApp Platformを利用したメリットはアプリのリリースが容易�
 \subsection{実装環境(フロントエンド)}\label{sec:environment1}
 ご意見BOXのフロントエンド実装環境を表\ref{table:実装環境（フロントエンド）}に示す.
 
-\begin{table}[htbp]
+\begin{table}[htb]
   \caption{ご意見BOXの実装環境(フロントエンド)}\label{table:実装環境（フロントエンド）}
   \centering
   \begin{tabular}{|l|l|l|c|c|p{3cm}|}
@@ -298,7 +292,7 @@ miniApp Platformを利用したメリットはアプリのリリースが容易�
 \end{table}
 
 \subsubsection{JavaScript}\label{sec:JavaScript}
-JavaScriptは軽量なインタープリンター型のプログラミング言語である\cite{bid:js}.
+JavaScriptは軽量なインタープリター型のプログラミング言語である\cite{bid:js}.
 本システムでは,ご意見BOXの記述言語として使用している.
 
 \subsubsection{npm}\label{sec:npm}
@@ -344,7 +338,8 @@ Node.jsとブラウザのためのPromiseベースのHTTPクライアントラ�
 \end{itemize}
 
 \subsection{実装した画面}\label{sec:screen}
-ご意見BOXのフロントエンドに実装した画面は以下のとおりである\begin{itemize}
+ご意見BOXのフロントエンドに実装した画面は以下のとおりである.
+\begin{itemize}
   \item ログイン・新規登録画面
   \item ログイン画面
   \item 新規登録画面
@@ -356,7 +351,7 @@ Node.jsとブラウザのためのPromiseベースのHTTPクライアントラ�
 
 \subsubsection{ログイン・新規登録画面}\label{sec:auth}
 ユーザーが本システムを利用する際,まず初めに表示される画面である(図\ref{fig:auth}).
-この画面では,ログイン画面(\ref{sec:login})と新規登録画面(\ref{sec:register})へ遷移することが出来る.
+この画面では,ログイン画面(\ref{sec:login})と新規登録画面(\ref{sec:register})へ遷移できる.
 
 % 図の挿入
 \begin{figure}[htb]
@@ -368,7 +363,7 @@ Node.jsとブラウザのためのPromiseベースのHTTPクライアントラ�
 
 \subsubsection{ログイン画面}\label{sec:login}
 ユーザーが本システムにログインする際,表示される画面である(図\ref{fig:login}).
-この画面は,ログインに必要なユーザーIDとパスワードを入力することが出来る.
+この画面は,ログインに必要なユーザーIDとパスワードを入力できる.
 正しいユーザーIDとパスワードが入力されるとログインに成功する.
 成功した後は,ホーム画面(\ref{sec:home})に遷移する.
 
@@ -382,8 +377,8 @@ Node.jsとブラウザのためのPromiseベースのHTTPクライアントラ�
 
 \subsubsection{新規登録画面}\label{sec:register}
 新規登録ボタンを押下した際,表示される画面である(図\ref{fig:register}).
-ユーザーのアカウントを新規登録することが出来る.
-具体的には,本システムを利用するのに必要なユーザーのニックネーム,ユーザー種別,所属・学部/学科,ユーザーID,パスワードを登録することが出来る.
+ユーザーのアカウントを新規登録できる.
+具体的には,本システムを利用するのに必要なユーザーのニックネーム,ユーザー種別,所属・学部/学科,ユーザーID,パスワードを登録できる.
 新規登録に成功すると,ログイン画面(\ref{sec:login})に遷移する.
 
 % 図の挿入
@@ -412,7 +407,7 @@ Node.jsとブラウザのためのPromiseベースのHTTPクライアントラ�
 
 \subsubsection{コメント画面}\label{sec:comments}
 投稿一覧に表示されるご意見を押下すると,表示される画面である（図\ref{fig:comments}）（図\ref{fig:comments2}）.
-この画面では,ご意見に対してコメントを投稿出来る.
+この画面では,ご意見に対してコメントを投稿できる.
 また,投稿されたコメントに対してリアクションを付与・削除できる.
 ご意見の投稿主である場合,コメントにベストアンサーを１つ付与できる.
 
@@ -434,7 +429,7 @@ Node.jsとブラウザのためのPromiseベースのHTTPクライアントラ�
 
 \subsubsection{投稿画面}\label{sec:post}
 投稿するボタンを押下した際,表示される画面である(図\ref{fig:post}).
-この画面では,ご意見のタイトル,内容,画像のアップロード,回答して欲しいユーザー種別,回答して欲しい所属・学部/学科を設定出来る.
+この画面では,ご意見のタイトル,内容,画像のアップロード,回答して欲しいユーザー種別,回答して欲しい所属・学部/学科を設定できる.
 投稿するを押下すると投稿される.
 
 % 図の挿入
@@ -447,7 +442,7 @@ Node.jsとブラウザのためのPromiseベースのHTTPクライアントラ�
 
 \subsubsection{ユーザープロフィール画面}\label{sec:profile}
 プロフィールアイコンを押下した際,表示される画面である(図\ref{fig:profile}).
-この画面では,ユーザーのプロフィール画像の設定,ユーザーの投稿したご意見とコメントしたご意見を閲覧することが出来る.
+この画面では,ユーザーのプロフィール画像の設定,ユーザーの投稿したご意見とコメントしたご意見を閲覧できる.
 
 % 図の挿入
 \begin{figure}[htb]
@@ -460,7 +455,7 @@ Node.jsとブラウザのためのPromiseベースのHTTPクライアントラ�
 \subsection{実装環境（バックエンド）}\label{sec:environment2}
 ご意見BOXの実装環境（バックエンド）を表\ref{table:実装環境（バックエンド）}に示す.
 
-\begin{table}[htbp]
+\begin{table}[htb]
   \caption{ご意見BOXの実装環境(バックエンド)}\label{table:実装環境（バックエンド）}
   \centering
   \begin{tabular}{|l|l|l|c|c|p{3cm}|}
@@ -492,7 +487,7 @@ Node.jsはクロスプラットフォームに対応したフリーでオープ�
 
 \subsubsection{Express}\label{sec:Express}
 Express.jsは,Node.jsのための軽量で柔軟なWebアプリケーションフレームワークである.
-\cite{bid:express}.
+\cite{bid:express}
 本システムでは,バックエンドサーバーのフレームワークとして使用している.
 
 \subsubsection{MySQL}\label{sec:MySQL}
@@ -517,7 +512,7 @@ Node.jsのミドルウェアで,主にファイルのアップロードを処理
 \section{評価}
 本章では,評価内容,評価結果,考察について述べる.
 
-\section{評価内容}
+\subsection{評価内容}
 本研究では,九州産業大学の学生にご意見BOXを利用してもらい評価実験を行った.
 アンケートの回答は４段階評価と自由記述形式を組み合わせたものとなっている.
 
@@ -533,7 +528,7 @@ Node.jsのミドルウェアで,主にファイルのアップロードを処理
 
 %5.2
 \subsection{評価結果}
-九州産業大学の学生にアンケートの回答を求めたところ,6名からのアンケートの回答が得られた.アンケート結果を表\ref{tabel:questions}示す.自由記述の回答内容を以下に示す.
+九州産業大学の学生にアンケートの回答を求めたところ,6名からのアンケートの回答が得られた.アンケート結果を表\ref{tabel:questions}に示す.自由記述の回答内容を以下に示す.
 
 \begin{table}[htbp]
   \caption{アンケート結果}\label{tabel:questions}
@@ -625,7 +620,7 @@ Node.jsのミドルウェアで,主にファイルのアップロードを処理
 そのため,カジュアルな意見を広範囲から募ろうと考えると,有効な手段を探すのは難しい現状がある.
 この現状を解決するには悩み事をご意見という形で投稿し,それにコメントできるデジタルプラットフォームを構築する必要があると考えた.
 本研究の目的は,広範囲からカジュアルな意見を募ることができる手段を増やすことである.
-目標達成のために,広範囲からカジュアルな意見交換ができる「ご意見 BOX」を開発した.
+目的達成のために,広範囲からカジュアルな意見交換ができる「ご意見 BOX」を開発した.
 
 本研究では,九州産業大学の学生にご意見 BOX を利用してもらい,アンケートによる
 評価実験を行った.アンケートの結果から,ご意見の投稿・コメントの投稿機能が正常に
@@ -647,27 +642,27 @@ Node.jsのミドルウェアで,主にファイルのアップロードを処理
   \item UIの改良
 \end{enumerate}
 
-1つ目は,ご意見・コメント内容の編集機能の実装である.
+1つめは,ご意見・コメント内容の編集機能の実装である.
 本研究中に,ご意見・コメント内容の編集機能を実装できなかったため,ご意見・コメント内容の編集機能の実装が課題である.
 ご意見・コメントの内容の編集機能を実装することで,誤字や情報の修正が可能となりユーザーの満足度向上に繋がると考えられる.
 
 2つめは,コメントの削除機能の実装である.
-本研究中に,コメントの削除機能の実装が間に合わなかっため,削除機能の実装が課題である.
+本研究中に,コメントの削除機能の実装が間に合わなかったため,削除機能の実装が課題である.
 コメントの削除機能を実装することで,気楽にコメントを投稿できると考えられる.
 
 3つめは,ベストアンサーの削除機能の実装である.
 本研究中にベストアンサーの削除機能を実装できなかったため,削除機能の実装が課題である.
 ベストアンサーの削除機能を実装することで,誤ってベストアンサーを付与した際に削除できるためユーザーの満足度が向上すると考えられる.
 
-4つ目は,Androidの一部動作しない問題の解消である.
+4つめは,Androidの一部動作しない問題の解消である.
 プルダウンによる選択が出来ない問題の解消が課題である.
 プルダウンによる選択が出来ない問題を解消することで,Androidユーザーの利用者が拡大すると考えられる.
 
-5つ目は,ユーザー数の獲得・投稿意欲の向上が課題である.
+5つめは,ユーザー数の獲得・投稿意欲の向上が課題である.
 ユーザー数が不足しているため投稿してもコメントを得にくいため,投稿意欲が低いという現状がある.
 ユーザー数の獲得・投稿意欲の向上を実現することで,投稿数が増加し,コメントを得やすくなると考えられる.
 
-6つ目はUIの改良が課題である.
+6つめはUIの改良が課題である.
 UIを改良することで,ご意見のタイトルや内容の視認性や機能の利便性が向上すると考えられる.
 その結果,ユーザーの満足度が向上すると考えられる.
 
@@ -682,7 +677,7 @@ miniApp Platform - ミニアプリ基盤 TOP(online),
 \urlj{https://www.scsk.jp/sp/miniapp/}
 
 \bibitem{bid:js}
-JavaScript - MDN Web Does - Mozilla(online),
+JavaScript - MDN Web Docs - Mozilla(online),
 
 \urlj{https://developer.mozilla.org/ja/docs/Web/JavaScript}
 
@@ -699,12 +694,12 @@ Vue.js(online),
 \bibitem{bid:VueRouter}
 Vue Router | The official Router for Vue.js(online),
 
-\urlj{ https://router.vuejs.org/guide/}
+\urlj{https://router.vuejs.org/guide/}
 
 \bibitem{bid:axios}
 Axios 入門 | Axios Docs(online),
 
-\urlj{ https://axios-http.com/ja/docs/intro}
+\urlj{https://axios-http.com/ja/docs/intro}
 
 \bibitem{bid:Pinia}
 Pinia | The intuitive store for Vue.js(online),
@@ -729,7 +724,7 @@ Express.js入門 | Node.jsで効率的なWeb開発を実現する方法(online),
 \bibitem{bid:MySQL}
 MySQLとは（初心者向け入門編）(online),
 
-\urlj{ https://kinsta.com/jp/blog/what-is-mysql/ }
+\urlj{https://kinsta.com/jp/blog/what-is-mysql/ }
 
 \bibitem{bid:JWT認証}
 JSON Web Tokenの概要(online),
